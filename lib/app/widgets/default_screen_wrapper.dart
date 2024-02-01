@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:peanut_trade/app/dialogs/logout_dialog/logout_dialog.dart';
 import 'package:peanut_trade/core/app_theme.dart';
 
 import '../../core/size_config.dart';
+import '../routes/app_pages.dart';
 
 typedef FutureCallback = Future<void> Function();
 
@@ -106,26 +108,39 @@ class DefaultScreenWrapper extends StatelessWidget {
             color: AppTheme().colorScheme.tertiary,
             size: SizeConfig().icon30()
         ),
-        leading: showBackBtn
-            ? IconButton(
-          icon: Icon(
-            Icons.keyboard_arrow_left,
-            color: Colors.black54,
-            size: SizeConfig().icon25(),
+        leading:  Icon(
+            Icons.home_rounded,
+            color: Colors.white,
+            size: SizeConfig().icon35(),
           ),
-          onPressed: () {
-            onBackPressed != null ? onBackPressed!() : Get.back();
-          },
-        )
-            : null,
-        title: Text(""),
+        actions: [
+          InkWell(
+            onTap: () {
+              Get.toNamed(Routes.USER_ACCOUNT);
+            },
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: SizeConfig().icon10()/2),
+              child: Icon(
+                Icons.account_circle,
+                size: SizeConfig().icon35(),
+                color: Colors.white,
+              ),
+            ),
+          )
+        ],
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(title)
+          ],
+        ),
         titleSpacing:Get.width>550? SizeConfig().icon15(): titleSpacing,
         centerTitle: centerTitle,
         titleTextStyle: titleTextStyle,
         backgroundColor: AppTheme().colorScheme.tertiary,
         elevation: elevation,
       );
-    }else{
+    }else if(appBarType == AppBarType.ACCOUNT){
       return AppBar(
         toolbarHeight: kToolbarHeight,
         systemOverlayStyle: SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
@@ -137,15 +152,58 @@ class DefaultScreenWrapper extends StatelessWidget {
             ? IconButton(
           icon: Icon(
             Icons.keyboard_arrow_left,
-            color: Colors.black54,
-            size: SizeConfig().icon25(),
+            color: Colors.white,
+            size: SizeConfig().icon35(),
           ),
           onPressed: () {
             onBackPressed != null ? onBackPressed!() : Get.back();
           },
         )
             : null,
-        title: Text(""),
+        actions: [
+          InkWell(
+            onTap: () {
+              Logout.getLogoutDialog();
+            },
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: SizeConfig().icon10()/2),
+              child: Icon(
+                Icons.logout,
+                size: SizeConfig().icon35(),
+                color: Colors.white,
+              ),
+            ),
+          )
+        ],
+        title: Text("$title"),
+        titleSpacing:Get.width>550? SizeConfig().icon15(): titleSpacing,
+        centerTitle: centerTitle,
+        titleTextStyle: titleTextStyle,
+        backgroundColor: AppTheme().colorScheme.tertiary,
+        elevation: elevation,
+      );
+    }
+    else{
+      return AppBar(
+        toolbarHeight: kToolbarHeight,
+        systemOverlayStyle: SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
+        iconTheme:  IconThemeData(
+            color: AppTheme().colorScheme.tertiary,
+            size: SizeConfig().icon30()
+        ),
+        leading: showBackBtn
+            ? IconButton(
+          icon: Icon(
+            Icons.keyboard_arrow_left,
+            color: Colors.white,
+            size: SizeConfig().icon35(),
+          ),
+          onPressed: () {
+            onBackPressed != null ? onBackPressed!() : Get.back();
+          },
+        )
+            : null,
+        title: Text("$title"),
         titleSpacing:Get.width>550? SizeConfig().icon15(): titleSpacing,
         centerTitle: centerTitle,
         titleTextStyle: titleTextStyle,
@@ -167,5 +225,6 @@ class AppBarType {
   static const DEFAULT = AppBarType._internal(0);
   static const HOME = AppBarType._internal(1);
   static const ACCOUNT = AppBarType._internal(2);
+  static const LOGIN = AppBarType._internal(3);
 
 }

@@ -1,19 +1,25 @@
+import 'dart:ffi';
+
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:peanut_trade/app/routes/app_pages.dart';
 import 'package:peanut_trade/data/data_sync/user_sync_controller.dart';
 
 class LoginController extends GetxController {
-
-
+  TextEditingController login = TextEditingController();
+  TextEditingController password = TextEditingController();
   final count = 0.obs;
+  RxBool isLoading = false.obs;
 
   Future loginUser() async {
-    UserSyncController().login(2088888, "ral11lod").then((value){
+    isLoading.value = true;
+    UserSyncController().login(int.parse(login.text), password.text).then((value){
       value.fold(
           (fail) {
-
+            isLoading.value = false;
           },
           (ok) {
+            isLoading.value = false;
             Get.offNamed(Routes.HOME);
           }
       );
@@ -35,5 +41,4 @@ class LoginController extends GetxController {
     super.onClose();
   }
 
-  void increment() => count.value++;
 }

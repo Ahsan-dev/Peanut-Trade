@@ -1,3 +1,4 @@
+import 'package:dartz/dartz_unsafe.dart';
 import 'package:get/get.dart';
 import 'package:peanut_trade/data/data_sync/trade_sync_controller.dart';
 import 'package:peanut_trade/data/data_sync/user_sync_controller.dart';
@@ -9,6 +10,8 @@ class HomeController extends GetxController {
   RxString name = "".obs;
   RxString address = "".obs;
   RxString phone = "".obs;
+  RxDouble totalProfit = 0.0.obs;
+  RxBool isLoading = false.obs;
   final user = Rxn<UserAccount>();
   RxList<OpenTrade> tradeList = <OpenTrade>[].obs;
 
@@ -38,13 +41,19 @@ class HomeController extends GetxController {
 
 
   Future getTrades() async {
+    isLoading.value = true;
+    totalProfit.value = 0.0;
     await TradeSyncController().getAllTrades().then((value) {
       value.fold(
           (fail) {
-
+            isLoading.value = false;
           },
           (ok) {
+            isLoading.value = false;
             tradeList.value = ok;
+            for(var e in ok) {
+              totalProfit.value += e.profit!;
+            }
           }
       );
     });
