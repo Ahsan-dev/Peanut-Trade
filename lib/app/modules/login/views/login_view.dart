@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:peanut_trade/app/widgets/default_screen_wrapper.dart';
 import 'package:peanut_trade/core/app_theme.dart';
+import 'package:peanut_trade/core/helper_functions/custom_snackbar_alert.dart';
 import 'package:peanut_trade/core/size_config.dart';
 
 import '../../../widgets/custom_button.dart';
@@ -65,7 +66,7 @@ class LoginBody extends GetView<LoginController> {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: SizeConfig().icon16()),
                       child: Text(
-                        "Login to make an order, access your orders, special offers, health tips, and more!",
+                        "Login to access your trades, profit and more!",
                         textAlign: TextAlign.center,
                         style: TextStyle(fontSize: SizeConfig().font35()),
                       ),
@@ -81,6 +82,7 @@ class LoginBody extends GetView<LoginController> {
                   children: [
                     LoginTextField(controller: controller),
                     PasswordTextField(controller: controller),
+                    SizedBox(height: SizeConfig().icon25(),),
                     LoginButton(controller: controller)
                   ],
                 )
@@ -114,7 +116,14 @@ class LoginButton extends StatelessWidget {
           fontSize: SizeConfig().font40()
       ),
       onPressed: (){
-        controller.loginUser();
+        if(controller.login.text.isEmpty){
+          showSnackbarAlertPlain("Enter login");
+        }else if(controller.password.text.isEmpty){
+          showSnackbarAlertPlain("Enter password");
+        }else{
+          controller.loginUser();
+        }
+
       },
     );
   }

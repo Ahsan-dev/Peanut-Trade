@@ -183,25 +183,31 @@ class AccountBody extends GetView<UserAccountController> {
             ],
           ),
         ),
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SvgPicture.asset(
-              'assets/icons/location-04.svg',
-              height: SizeConfig().icon25(),
-              width: SizeConfig().icon25(),
-            ),
-            SizedBox(width: SizeConfig().icon10()/2),
-            Text(
-              "Addresses",
-              style: TextStyle(
-                  color: CustomColors.getTextColor1(),
-                  fontWeight: FontWeight.w600,
-                  fontSize: SizeConfig().font40()
+        Padding(
+          padding: EdgeInsets.symmetric(
+            vertical: SizeConfig().icon15(),
+            horizontal: SizeConfig().icon15()
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SvgPicture.asset(
+                'assets/icons/location-04.svg',
+                height: SizeConfig().icon25(),
+                width: SizeConfig().icon25(),
               ),
-            )
-          ],
+              SizedBox(width: SizeConfig().icon10()/2),
+              Text(
+                "Addresses",
+                style: TextStyle(
+                    color: CustomColors.getTextColor1(),
+                    fontWeight: FontWeight.w600,
+                    fontSize: SizeConfig().font40()
+                ),
+              )
+            ],
+          ),
         ),
         Container(
           margin: EdgeInsets.symmetric(

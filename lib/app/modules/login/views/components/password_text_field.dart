@@ -37,8 +37,7 @@ class PasswordTextField extends StatelessWidget {
                 enabled: true,
                 style: TextStyle(fontSize: SizeConfig().font45(), fontWeight: FontWeight.w500),
                 controller: controller.password,
-                maxLength: 11,
-                keyboardType: TextInputType.number,
+                keyboardType: TextInputType.text,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.only(
                     topRight: Radius.circular(SizeConfig().icon10()),
